@@ -11,6 +11,25 @@ namespace FirestoreRe.Droid.Extensions
 {
     public static class FirestoreExtension
     {
+        // ToDo: Support more types...
+        // https://firebase.google.com/docs/firestore/manage-data/data-types
+        // ToDo: Add interface to add custom types
+        private static Dictionary<Type, Func<Java.Lang.Object, System.Object>> TypeMapper = new Dictionary<Type, Func<Java.Lang.Object, dynamic>>
+        {
+            // array
+            { typeof(bool), (obj) => ((Java.Lang.Boolean)obj).BooleanValue() },
+            // byte
+            // Date?
+            // double
+            // pos
+            // int
+            // KVP
+            // null
+            // reference
+            { typeof(string), (obj) => obj.ToString() },
+        };
+
+
         private static T Cast<T>(DocumentSnapshot doc)
         {
             var instance = Activator.CreateInstance<T>();
@@ -18,9 +37,10 @@ namespace FirestoreRe.Droid.Extensions
             var baseData = doc.Data;
             foreach (var key in baseData.Keys)
             {
+                // ToDo: Error handling
                 var prop = typeof(T).GetProperty(key);
-                // ToDo: Support more types... now only support String
-                prop.SetValue(instance, baseData[key].ToString());
+                var propType = prop.PropertyType;
+                prop.SetValue(instance, TypeMapper[propType](baseData[key]));
             }
 
             return instance;
@@ -31,8 +51,8 @@ namespace FirestoreRe.Droid.Extensions
             var tcs = new TaskCompletionSource<T>();
 
             reference
-            .Get()
-            .AddOnCompleteListener(new OnCompleteEventHandleListener((Android.Gms.Tasks.Task obj) =>
+                .Get()
+                .AddOnCompleteListener(new OnCompleteEventHandleListener((Android.Gms.Tasks.Task obj) =>
             {
                 if (obj.IsSuccessful)
                 {
@@ -53,7 +73,7 @@ namespace FirestoreRe.Droid.Extensions
             var tcs = new TaskCompletionSource<IEnumerable<T>>();
 
             reference
-            .Get()
+                .Get()
                 .AddOnCompleteListener(new OnCompleteEventHandleListener((Android.Gms.Tasks.Task obj) =>
             {
                 if (obj.IsSuccessful)
