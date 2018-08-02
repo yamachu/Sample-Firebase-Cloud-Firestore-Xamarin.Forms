@@ -25,6 +25,8 @@ namespace FirestoreRe.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
+            Services.FirestoreService.Init();
+
             return base.FinishedLaunching(app, options);
         }
     }

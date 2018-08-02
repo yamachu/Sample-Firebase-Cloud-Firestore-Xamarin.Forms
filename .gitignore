@@ -42,3 +42,4 @@ Thumbs.db
 
 # credential
 FirestoreRe.Android/google-services.json
+FirestoreRe.iOS/GoogleService-Info.plist
