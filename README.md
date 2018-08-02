@@ -13,6 +13,7 @@
 
 * [Xamarin.Forms 3.1.0.637273](https://www.nuget.org/packages/Xamarin.Forms/3.1.0.637273)
 * [Xamarin.Firebase.Firestore 60.1142.1](https://www.nuget.org/packages/Xamarin.Firebase.Firestore/60.1142.1)
+* [Xamarin.Firebase.iOS.CloudFirestore 0.12.5.0](https://github.com/xamarin/GoogleApisForiOSComponents)
 
 ## Notice
 
@@ -23,8 +24,6 @@ Must add reference [Xamarin.Google.Guava](https://www.nuget.org/packages/Xamarin
 ref: https://github.com/xamarin/GooglePlayServicesComponents/pull/130
 
 ### iOS
-
-WIP
 
 You must build [GoogleApisForiOSComponents](https://github.com/xamarin/GoogleApisForiOSComponents) and reference it.
 
